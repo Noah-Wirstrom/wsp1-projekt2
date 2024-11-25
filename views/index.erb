@@ -7,6 +7,49 @@
     <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
 </head>
 <body>
-  <img src="/img/glhf.png">
+
+  <h1>Todo Lista</h1> 
+
+    <% @todos.each do |todo| %>
+    <ul>
+      <%if(todo["completed"]==0)%>
+        <%p("We're in")%>
+        <li class="todo">
+          <h2><%= todo["name"] %></h2>
+          <p><%= todo["description"] %></p>
+       
+       <form action="/todos/<%=todo["id"]%>/delete" method="post">
+          <button type="submit">Delete</button>
+       </form>
+        <form action="/todos/<%=todo["id"]%>/<%=todo["completed"]%>" method="post">
+          <button type="submit">Complete</button>
+        </form>
+        
+        </li>
+      <% end %>
+
+      <%if(todo["completed"]==1)%>
+
+        <li class="todo">
+          <h2><%= todo["name"] %></h2>
+          <p><%= todo["description"] %></p>
+      
+       <form action="/todos/<%=todo["id"]%>/delete" method="post">
+          <button type="submit">Delete</button>
+        </form>
+        <form action="/todos/<%=todo["id"]%>/<%=todo["completed"]%>" method="post">
+          <button type="submit">Uncomplete</button>
+        </form>
+       
+         </li>
+
+      <% end %>
+    </ul>
+    <% end %>
+        <form action="/todos" method="post">
+        <input type="text" name="title" placeholder="Title">
+        <input type="text" name="description" placeholder="Description">
+        <button type="submit">Add</button>
+    
 </body>
 </html>
