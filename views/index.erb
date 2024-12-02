@@ -13,7 +13,7 @@
     <% @todos.each do |todo| %>
     <ul>
       <%if(todo["completed"]==0)%>
-        <%p("We're in")%>
+        
         <li class="todo">
           <h2><%= todo["name"] %></h2>
           <p><%= todo["description"] %></p>
@@ -47,8 +47,8 @@
     </ul>
     <% end %>
         <form action="/todos" method="post">
-        <input type="text" name="title" placeholder="Title">
-        <input type="text" name="description" placeholder="Description">
+        <input type="text" id="name" name="name" placeholder="Name">
+        <input type="text" id="description" name="description" placeholder="Description">
         <button type="submit">Add</button>
     
 </body>

@@ -28,4 +28,16 @@ class App < Sinatra::Base
         redirect "/"
     end
 
+    post '/todos' do
+        db.execute("INSERT INTO todos (name, description, completed) VALUES(?,?,?)",
+        [
+         params["name"],
+         params["description"],
+         0
+
+        ])
+        redirect "/"
+    end
+
+
 end
