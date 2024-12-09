@@ -1,4 +1,10 @@
+require 'sinatra'
+require 'securerandom'
+require 'bcrypt'
+
+
 class App < Sinatra::Base
+
 
     def db
         return @db if @db
@@ -37,6 +43,37 @@ class App < Sinatra::Base
 
         ])
         redirect "/"
+    end
+    get '/login' do
+        if !session[:user]
+            erb(:login)
+        else
+            redirect('/todos')
+        end
+    end
+
+
+    post '/login' do
+        user = db.execute("SELECT * FROM users WHERE username=?", [params[:username]]).first
+        if user && user["password"]==params[:password]
+            session[:user] = user
+
+
+        end
+    end
+
+    post'/logout' do
+        session.clear
+        redirect("/login")
+    end
+
+    post '/register' do
+        db.execute("INSERT INTO users (username, password) VALUES(?,?)",
+        [
+            params["username"],
+            params["password"]
+        ])
+        redirect"/"
     end
 
 
